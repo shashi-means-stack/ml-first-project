@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: first-ml-project
+Version: 0.1.0
+Summary: Small production-ready machine learning project scaffold
+Requires-Python: >=3.10
+Requires-Dist: mlflow>=2.16.0
+Requires-Dist: dvc>=3.0.0
+Requires-Dist: scikit-learn>=1.4.0
+Requires-Dist: pandas>=2.2.0
+Requires-Dist: joblib>=1.4.0
+Requires-Dist: pyyaml>=6.0.0
+Requires-Dist: pytest>=8.0.0
+Requires-Dist: fastapi>=0.111.0
+Requires-Dist: uvicorn>=0.30.0
+Requires-Dist: jinja2>=3.1.0

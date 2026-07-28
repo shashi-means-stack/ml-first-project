@@ -1,0 +1,9 @@
+stages:
+  train:
+    cmd: python -m first_ml_project.train --config config/train_config.yaml
+    deps:
+      - src/first_ml_project/train.py
+      - config/train_config.yaml
+    outs:
+      - artifacts/model.joblib
+      - artifacts/metrics.json

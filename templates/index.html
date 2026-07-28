@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ML Prediction Demo</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
+    form { display: grid; gap: 12px; }
+    input { padding: 10px; }
+    button { padding: 10px 14px; width: fit-content; }
+    #result { margin-top: 20px; padding: 12px; background: #f5f5f5; }
+    #history { margin-top: 24px; }
+    .card { border: 1px solid #ddd; padding: 10px; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <h1>IRIS Flower Prediction</h1>
+  <form id="predict-form">
+    <input name="api_token" id="api-token" placeholder="API Token (default: demo-token)" value="demo-token">
+    <input name="sepal_length" placeholder="Sepal Length" step="0.1" required>
+    <input name="sepal_width" placeholder="Sepal Width" step="0.1" required>
+    <input name="petal_length" placeholder="Petal Length" step="0.1" required>
+    <input name="petal_width" placeholder="Petal Width" step="0.1" required>
+    <button type="submit">Predict</button>
+  </form>
+  <div id="result">Waiting for prediction...</div>
+  <div id="history"><h3>Recent predictions</h3></div>
+  <script>
+    const form = document.getElementById('predict-form');
+    const result = document.getElementById('result');
+    const history = document.getElementById('history');
+
+    function formatTimestamp(value) {
+      if (!value) return '-';
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return value;
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      let hours = date.getHours();
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      return `${day}/${month}/${year} - ${hours}:${minutes}${ampm}`;
+    }
+
+    async function loadHistory() {
+      const token = document.getElementById('api-token').value || 'demo-token';
+      const response = await fetch('/history', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await response.json();
+      history.innerHTML = '<h3>Recent predictions</h3>' + data.slice(-5).reverse().map(item => `
+        <div class="card">
+          <strong>${item.prediction_name}</strong> (${item.prediction})<br>
+          Sepal Length: ${item.features?.sepal_length ?? '-'}<br>
+          Sepal Width: ${item.features?.sepal_width ?? '-'}<br>
+          Petal Length: ${item.features?.petal_length ?? '-'}<br>
+          Petal Width: ${item.features?.petal_width ?? '-'}<br>
+          <small>${formatTimestamp(item.timestamp)}</small>
+        </div>
+      `).join('');
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const payload = Object.fromEntries(new FormData(form).entries());
+      const response = await fetch('/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${payload.api_token || 'demo-token'}`
+        },
+        body: JSON.stringify({
+          sepal_length: parseFloat(payload.sepal_length),
+          sepal_width: parseFloat(payload.sepal_width),
+          petal_length: parseFloat(payload.petal_length),
+          petal_width: parseFloat(payload.petal_width)
+        })
+      });
+      const data = await response.json();
+      result.innerHTML = `<strong>Prediction:</strong> ${data.prediction_name} (${data.prediction})<br><strong>Accuracy:</strong> ${data.metrics.accuracy}`;
+      await loadHistory();
+    });
+
+    loadHistory();
+  </script>
+</body>
+</html>

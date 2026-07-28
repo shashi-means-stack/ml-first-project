@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    command: python -m first_ml_project.train --config config/train_config.yaml
+    volumes:
+      - .:/app
+    environment:
+      - MLFLOW_TRACKING_URI=E:/first-ml-project/mlruns
+
+  api:
+    build: .
+    command: uvicorn first_ml_project.predict_api:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app

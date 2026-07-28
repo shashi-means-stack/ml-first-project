@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "first-ml-project"
+version = "0.1.0"
+description = "Small production-ready machine learning project scaffold"
+requires-python = ">=3.10"
+dependencies = [
+  "mlflow>=2.16.0",
+  "dvc>=3.0.0",
+  "scikit-learn>=1.4.0",
+  "pandas>=2.2.0",
+  "joblib>=1.4.0",
+  "pyyaml>=6.0.0",
+  "pytest>=8.0.0",
+  "fastapi>=0.111.0",
+  "uvicorn>=0.30.0",
+  "jinja2>=3.1.0",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

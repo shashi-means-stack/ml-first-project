@@ -1,0 +1,22 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: python -m first_ml_project.train --config config/train_config.yaml
+    deps:
+    - path: config/train_config.yaml
+      hash: md5
+      md5: b41795f3f34e3c8c28eb3a010974c8c5
+      size: 169
+    - path: src/first_ml_project/train.py
+      hash: md5
+      md5: a74a801430e2e9ef3f1a3ac57bf2e4d5
+      size: 2828
+    outs:
+    - path: artifacts/metrics.json
+      hash: md5
+      md5: afc01b1a2013744c51ba2fc64ffc26bf
+      size: 23
+    - path: artifacts/model.joblib
+      hash: md5
+      md5: 79f9bde56c4c0d4be9354d30353058f9
+      size: 1311

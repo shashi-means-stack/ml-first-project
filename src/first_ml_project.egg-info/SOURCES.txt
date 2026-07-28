@@ -1,0 +1,14 @@
+README.md
+pyproject.toml
+src/first_ml_project/__init__.py
+src/first_ml_project/auth.py
+src/first_ml_project/database.py
+src/first_ml_project/predict_api.py
+src/first_ml_project/train.py
+src/first_ml_project.egg-info/PKG-INFO
+src/first_ml_project.egg-info/SOURCES.txt
+src/first_ml_project.egg-info/dependency_links.txt
+src/first_ml_project.egg-info/requires.txt
+src/first_ml_project.egg-info/top_level.txt
+tests/test_api_auth.py
+tests/test_train.py

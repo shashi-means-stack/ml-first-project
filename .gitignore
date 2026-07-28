@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+.env
+.pytest_cache/
+.mypy_cache/
+mlruns/
+artifacts/
+.dvc/cache/
+dvc-cache/
+*.joblib
+*.csv
+!data/.gitkeep

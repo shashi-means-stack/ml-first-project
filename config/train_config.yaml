@@ -1,0 +1,7 @@
+test_size: 0.2
+random_state: 42
+max_iter: 300
+output_dir: artifacts
+mlflow_uri: E:/first-ml-project/mlruns
+mlflow_experiment: first-ml-project
+run_name: baseline
